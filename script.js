@@ -12,14 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
 function addTask() {
     const taskInput = document.getElementById('taskInput');
     const taskText = taskInput.value.trim();
-    if (!taskText) return;
+    
+    if (!taskText) return; // Prevent empty tasks
 
     const taskList = document.getElementById('taskList');
     const li = createTaskElement(taskText);
-
+    
     taskList.appendChild(li);
     saveTask(taskText);
     taskInput.value = '';
+    taskInput.focus(); // Added focus back to input field after adding a task
 }
 
 function createTaskElement(taskText) {
