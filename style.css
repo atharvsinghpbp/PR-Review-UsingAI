@@ -6,32 +6,36 @@
 }
 
 body {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #6b48ff, #00d2ff);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .container {
     width: 100%;
-    max-width: 500px;
-    padding: 20px;
+    max-width: 600px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .todo-app {
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
+    border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
-}
-
-h1 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 2rem;
 }
 
 .input-area {
@@ -42,9 +46,9 @@ h1 {
 
 input {
     flex: 1;
-    padding: 12px;
+    padding: 15px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     background: #f0f2f5;
     font-size: 1rem;
     outline: none;
@@ -53,21 +57,26 @@ input {
 
 input:focus {
     background: #fff;
-    box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 0 8px rgba(107, 72, 255, 0.5);
 }
 
 button {
-    padding: 12px 20px;
+    padding: 15px;
     border: none;
-    background: #667eea;
+    background: #6b48ff;
     color: white;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background 0.3s ease;
+    font-size: 1rem;
 }
 
 button:hover {
-    background: #5a6cd3;
+    background: #5a3de5;
+}
+
+button i {
+    font-size: 1.2rem;
 }
 
 ul {
@@ -80,14 +89,14 @@ li {
     justify-content: space-between;
     padding: 15px;
     background: #fff;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 }
 
 li:hover {
-    transform: translateX(5px);
+    transform: translateX(8px);
 }
 
 li.completed {
@@ -97,11 +106,38 @@ li.completed {
 }
 
 li button {
-    background: #ff4444;
+    background: #ff6b6b;
     padding: 8px 12px;
     font-size: 0.9rem;
 }
 
 li button:hover {
-    background: #cc0000;
+    background: #ff4040;
+}
+
+li button i {
+    margin-right: 5px;
+}
+
+.clear-btn {
+    display: block;
+    margin: 15px auto 0;
+    background: #ff9800;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.clear-btn:hover {
+    background: #e68900;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #fff;
+    font-size: 0.9rem;
 }
