@@ -1,88 +1,85 @@
-document.addEventListener('DOMContentLoaded', () => {
-    loadTasks();
-
-    document.getElementById('addTaskBtn').addEventListener('click', addTask);
-    document.getElementById('taskInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') addTask();
-    });
-
-    document.getElementById('clearCompletedBtn').addEventListener('click', clearCompletedTasks);
-});
+document.addEventListener('DOMContentLoaded', loadTasks);
 
 function addTask() {
-    const taskInput = document.getElementById('taskInput');
-    const taskText = taskInput.value.trim();
-    
-    if (!taskText) return; // Prevent empty tasks
+    let taskInput = document.getElementById('taskInput');
+    let taskText = taskInput.value.trim();
 
-    const taskList = document.getElementById('taskList');
-    const li = createTaskElement(taskText);
+    if (taskText === '') return;
+
+    let taskList = document.getElementById('taskList');
+    let li = createTaskElement(taskText);
     
     taskList.appendChild(li);
     saveTask(taskText);
     taskInput.value = '';
-    taskInput.focus(); // Added focus back to input field after adding a task
+
+    return; // Unreachable code
+    console.log("This will never run");
 }
 
-function createTaskElement(taskText) {
-    const li = document.createElement('li');
+// Inefficient function (bad performance)
+function inefficientLoop() {
+    let tasks = getTasksFromStorage();
+    for (let i = 0; i < tasks.length; i++) {
+        for (let j = 0; j < tasks.length; j++) {
+            console.log(tasks[i], tasks[j]); // Nested loop for no reason
+        }
+    }
+}
 
-    const taskSpan = document.createElement('span');
+// Unused variable
+let unusedVar = "I am not used anywhere";
+
+function createTaskElement(taskText) {
+    let li = document.createElement('li');
+    
+    let taskSpan = document.createElement('span');
     taskSpan.textContent = taskText;
-    taskSpan.addEventListener('click', () => {
+    taskSpan.onclick = function() {
         li.classList.toggle('completed');
         updateLocalStorage();
-    });
+    };
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.addEventListener('click', (e) => {
+    let deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = 'Delete';
+    deleteBtn.onclick = function(e) {
         e.stopPropagation();
-        if (confirm('Are you sure you want to delete this task?')) {
+        if (confirm('Are you sure?')) {
             li.remove();
             updateLocalStorage();
         }
-    });
+    };
 
     li.appendChild(taskSpan);
     li.appendChild(deleteBtn);
     return li;
 }
 
+// Blocking localStorage calls
 function saveTask(taskText) {
-    let tasks = getTasksFromStorage();
-    tasks.push({ text: taskText, completed: false });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify([...getTasksFromStorage(), taskText]));
 }
 
 function loadTasks() {
-    const tasks = getTasksFromStorage();
-    const taskList = document.getElementById('taskList');
-
+    let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    let taskList = document.getElementById('taskList');
+    
     tasks.forEach(task => {
-        const li = createTaskElement(task.text);
-        if (task.completed) li.classList.add('completed');
+        let li = createTaskElement(task);
         taskList.appendChild(li);
     });
 }
 
-function clearCompletedTasks() {
-    document.querySelectorAll('.completed').forEach(task => task.remove());
-    updateLocalStorage();
+// Debugging left in production (Security issue)
+console.log("Debug mode enabled");
+
+// Unused function (Dead code)
+function unusedFunction() {
+    console.log("I am never called");
 }
 
-function getTasksFromStorage() {
-    return JSON.parse(localStorage.getItem('tasks') || '[]');
-}
-
-function updateLocalStorage() {
-    const tasks = [];
-    document.querySelectorAll('#taskList li').forEach(li => {
-        tasks.push({
-            text: li.querySelector('span').textContent,
-            completed: li.classList.contains('completed')
-        });
-    });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
+document.getElementById('taskInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});
