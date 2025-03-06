@@ -1,4 +1,3 @@
-// Load tasks from localStorage when page loads
 document.addEventListener('DOMContentLoaded', loadTasks);
 
 function addTask() {
@@ -26,10 +25,13 @@ function createTaskElement(taskText) {
     };
 
     const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.onclick = function() {
-        li.remove();
-        updateLocalStorage();
+    deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+    deleteBtn.onclick = function(e) {
+        e.stopPropagation();
+        if (confirm('Are you sure you want to delete this task?')) {
+            li.remove();
+            updateLocalStorage();
+        }
     };
 
     li.appendChild(taskSpan);
@@ -71,7 +73,6 @@ function updateLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Add task with Enter key
 document.getElementById('taskInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         addTask();
